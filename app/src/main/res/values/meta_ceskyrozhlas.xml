@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ceskyrozhlas_name">Český Rozhlas</string>
+    <string name="ceskyrozhlas_description">Vysílání Českého Rozhlasu</string>
+    <string name="ceskyrozhlas_samples">
+        Zapni Radiožurnál;
+        Český rozhlas Dvojka;
+        Český rozhlas Vltava;
+        Český rozhlas Plus;
+        Český rozhlas Wave;
+        Český rozhlas D dur;
+        Český rozhlas Jazz;
+        Český rozhlas Junior;
+        Český rozhlas Retro;
+    </string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sport_title">Sport</string>
+    <string name="sport_description">Sportovní výsledky ze sport.cz</string>
+    <string name="sport_samples">
+        Sportovní výsledky;
+        Výsledky fotbalu;
+        Výsledky hokeje;
+        Jak hrála Sparta;
+    </string>
+</resources>

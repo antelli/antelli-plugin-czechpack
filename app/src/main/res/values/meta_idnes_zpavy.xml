@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="idnes_title">iDNES Zprávy</string>
+    <string name="idnes_description">Aktuální zpravodajství</string>
+    <string name="idnes_samples">
+        Zprávy;
+        Zprávy z domova;
+        Zprávy ze světa;
+        Zprávy z ekonomiky;</string>
+</resources>

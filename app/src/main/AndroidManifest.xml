@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.antelli.plugin.czechpack">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:name="io.antelli.plugin.App"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/AppTheme"
+        android:networkSecurityConfig="@xml/network_security_config">
+
+        <activity
+            android:name="io.antelli.plugin.seznam.pocasi.SeznamPocasiSettingsActivity"
+            android:label="@string/settings_pocasi_title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name="io.antelli.plugin.idnes.tv.IdnesTvSettingsActivity"
+            android:label="@string/settings_tv_title"></activity>
+        <activity
+            android:name="io.antelli.plugin.recepty.ReceptySettingsActivity"
+            android:label="@string/settings_recepty_title" />
+
+        <service android:name="io.antelli.plugin.idnes.zpravy.IdnesNewsPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/idnes_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/idnes_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/idnes_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/idnes" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+        <service android:name="io.antelli.plugin.seznam.search.SeznamSearchService">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/seznam_search_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/seznam_search_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/seznam_search_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/seznam" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+        <service android:name="io.antelli.plugin.seznam.pocasi.SeznamPocasiPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/seznam_pocasi_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/seznam_pocasi_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/seznam_pocasi_samples" />
+            <meta-data
+                android:name="settings"
+                android:value="true" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/pocasi" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+        <service android:name="io.antelli.plugin.idnes.tv.IdnesTvPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/idnes_tv_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/idnes_tv_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/idnes_tv_samples" />
+            <meta-data
+                android:name="settings"
+                android:value="true" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/idnes" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.recepty.ReceptyPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/recepty_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/recepty_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/recepty_samples" />
+            <meta-data
+                android:name="settings"
+                android:value="true" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/recepty" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.kurzy.KurzyPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/kurzy_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/kurzy_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/kurzy_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/kurzy" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.csfd.CsfdPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/csfd_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/csfd_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/csfd_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/csfd" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.sport.SportPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/sport_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/sport_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/sport_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/sport" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.vtipy.VtipyPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/vtipy_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/vtipy_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/vtipy_samples" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.perlagroup.PerlaGroupPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/pohadky_name" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/pohadky_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/pohadky_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/perlagroup" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.ceskatelevize.CeskaTelevizePlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/ceskatelevize_name" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/ceskatelevize_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/ceskatelevize_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/ceskatelevize" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.ceskyrozhlas.CeskyRozhlasPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/ceskyrozhlas_name" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/ceskyrozhlas_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/ceskyrozhlas_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/ceskyrozhlas" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.evropa2.Evropa2Plugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/evropa2_name" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/evropa2_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/evropa2_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/evropa2" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.heureka.HeurekaPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/heureka_name" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/heureka_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/heureka_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/heureka" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.heureka.AlzaPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/alza_name" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/alza_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/alza_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/alza" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+        <service android:name="io.antelli.plugin.damejidlo.DameJidloPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/damejidlo_name" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/damejidlo_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/damejidlo_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/damejidlo" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alza_name">Alza</string>
+    <string name="alza_description">Vyhledávání zboží na Alze</string>
+    <integer name="alza_icon"></integer>
+    <string name="alza_samples">
+        Kolik stojí Samsung Galaxy S9?;
+    </string>
+</resources>

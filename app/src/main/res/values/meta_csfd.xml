@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="csfd_title">ČSFD</string>
+    <string name="csfd_description">Informace o filmech a seriálech z csfd.cz</string>
+    <string name="csfd_samples">
+        Film Počátek;
+        Seriál Hra o trůny;
+        Hodnocení filmu Avatar;
+        Kolik procent má Matrix;
+    </string>
+</resources>

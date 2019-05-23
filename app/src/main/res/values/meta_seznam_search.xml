@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="seznam_search_title">Seznam</string>
+    <string name="seznam_search_description">Vyhledávání na Seznamu</string>
+    <string name="seznam_search_samples">
+        Hledej tipy na výlet;
+        Najdi recenze Samsung Galaxy S9;
+    </string>
+</resources>

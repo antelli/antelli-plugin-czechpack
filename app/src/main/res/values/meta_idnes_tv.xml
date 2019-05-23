@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="idnes_tv_title">iDNES Televizní Program</string>
+    <string name="idnes_tv_description">Televizní program</string>
+    <string name="idnes_tv_samples">
+        Televizní program;
+        Co dávají;
+        Co budou dávat večer;
+    </string>
+    <bool name="idnes_tv_settings">false</bool>
+</resources>

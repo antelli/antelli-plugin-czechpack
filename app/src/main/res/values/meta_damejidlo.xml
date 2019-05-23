@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="damejidlo_name">Dáme Jídlo</string>
+    <string name="damejidlo_description">Rozvoz jídla přes damejidlo.cz</string>
+    <string name="damejidlo_samples">
+        Mám hlad;
+        Dal bych si řízek;
+        Mám chuť na sushi;
+    </string>
+</resources>

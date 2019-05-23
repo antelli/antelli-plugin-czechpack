@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vtipy_title">Vtipy</string>
+    <string name="vtipy_description">Náhodný výběr vtipů z vtipy.net</string>
+    <string name="vtipy_samples">
+        Vtip;
+        Řekni vtip;
+    </string>
+</resources>

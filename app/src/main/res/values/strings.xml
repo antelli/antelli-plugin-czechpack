@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">České Pluginy pro Antelli</string>
+    <string name="author">Antelli.io</string>
+    <string name="email">support@antelli.io</string>
+    <string name="languages">cs</string>
+
+    <string name="settings_pocasi_title">Nastavení počasí</string>
+    <string name="settings_tv_title">Nastavení TV programu</string>
+    <string name="settings_recepty_title">Nastavení receptů</string>
+</resources>

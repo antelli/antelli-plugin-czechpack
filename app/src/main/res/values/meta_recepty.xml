@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recepty_title">Recepty</string>
+    <string name="recepty_description">Vyhledávání receptů na recepty.cz</string>
+    <string name="recepty_samples">
+        Jak se vaří guláš;
+        Jak upéct štrůdl;
+        Jak se dělá pizza;
+    </string>
+    <bool name="recepty_settings">false</bool>
+</resources>

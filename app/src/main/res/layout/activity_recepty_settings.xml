@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+    <variable
+        name="vm"
+        type="io.antelli.plugin.recepty.ReceptySettingsViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:background="?attr/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Title"
+                android:text="Vyberte službu pro rozvoz potravin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Subtitle"
+                android:text="Tato služba se bude používat pro vyhledávání ingrediencí" />
+
+            <Spinner
+                android:layout_width="240dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:entries="@{vm.groceryServices}"
+                android:selectedItemPosition="@={vm.selectedIndex}"></Spinner>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="seznam_pocasi_title">Počasí</string>
+    <string name="seznam_pocasi_description">Předpověď počasí z pocasi.cz</string>
+    <string name="seznam_pocasi_samples">
+        Počasí;
+        Jak bude zítra;
+        Jak bude v pátek;
+    </string>
+    <bool name="seznam_pocasi_settings">false</bool>
+</resources>

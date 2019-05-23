@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kurzy_title">Kurzy</string>
+    <string name="kurzy_description">Aktuální kurzy měn z kurzy.cz</string>
+    <string name="kurzy_samples">
+        Kolik je Dolar;
+        Kolik je 10 Euro;</string>
+</resources>

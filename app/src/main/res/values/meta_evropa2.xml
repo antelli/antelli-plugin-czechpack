@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="evropa2_name">Evropa 2</string>
+    <string name="evropa2_description">Vysílání rádia Evropa 2</string>
+    <string name="evropa2_samples">
+        Evropa 2;
+        Zapni Evropu 2;
+    </string>
+</resources>

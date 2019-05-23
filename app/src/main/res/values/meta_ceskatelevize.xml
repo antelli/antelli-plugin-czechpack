@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ceskatelevize_name">Česká Televize</string>
+    <string name="ceskatelevize_description">Živé vysílání České Televize</string>
+    <string name="ceskatelevize_samples">
+        Zapni ČT1;
+        Zapni ČT2;
+        Zapni ČT24;
+        Zapni ČT Sport;
+        Zapni Déčko;
+        Zapni ČT Art;
+    </string>
+</resources>

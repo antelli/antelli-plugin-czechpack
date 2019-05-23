@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="io.antelli.plugin.idnes.tv.IdnesTvSettingsViewModel" />
+
+        <variable
+            name="item"
+            type="io.antelli.plugin.idnes.tv.IdnesTvChannel" />
+    </data>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/wrapper_bg"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:padding="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:url="@{item.logo}" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:text="@{item.name}"
+                android:checked="@{vm.isFavourite(item)}"
+                android:onClick="@{() -> vm.toggleFavourite(item)}"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+</layout>
