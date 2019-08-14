@@ -39,28 +39,6 @@
         android:padding="8dp"
         android:text="Používat aktuální polohu" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/wrapper_bg"
-            android:padding="8dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="Nebo vyberte město ze seznamu"/>
-
-    <Spinner
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:enabled="@{!vm.isGps}"
-        android:entries="@{vm.locations}"
-        android:selectedItemPosition="@={vm.selectedIndex}"></Spinner>
-    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
 </layout>

@@ -22,22 +22,8 @@ import io.antelli.plugin.base.AntelliLocation
 class SeznamPocasiSettingsViewModel(application: Application) : BaseViewModel(application) {
 
     var isGps: ObservableField<Boolean> = ObservableField(false)
-    var locations = ObservableArrayList<AntelliLocation>()
-    var selectedIndex = ObservableInt()
-    private val dataManager: SeznamPocasiApi
 
     init {
-        dataManager = SeznamPocasiApi(getApplication())
-        locations.addAll(dataManager.locations)
-
-        val city = Prefs.seznamPocasiCity
-        for (i in locations.indices) {
-            if (locations[i].value == city) {
-                selectedIndex.set(i)
-                break
-            }
-        }
-
         val gpsSettings = Prefs.seznamPocasiGps
         if (gpsSettings && ContextCompat.checkSelfPermission(this.getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) == PermissionChecker.PERMISSION_GRANTED) {
             isGps.set(true)
@@ -47,7 +33,6 @@ class SeznamPocasiSettingsViewModel(application: Application) : BaseViewModel(ap
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         Prefs.seznamPocasiGps = isGps.get()!!
-        Prefs.seznamPocasiCity = locations[selectedIndex.get()].value
     }
 
 }
