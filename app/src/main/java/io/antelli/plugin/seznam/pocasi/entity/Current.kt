@@ -5,25 +5,25 @@ import com.google.gson.annotations.SerializedName
 
 data class Current(
     @SerializedName("bio")
-    val bio: Int?,
+    val bio: Int,
     @SerializedName("feelTemp")
-    val feelTemp: Double?,
+    val feelTemp: Double,
     @SerializedName("feelTemp2")
-    val feelTemp2: Double?,
+    val feelTemp2: Double,
     @SerializedName("icon")
-    val icon: Int?,
+    val icon: Int,
     @SerializedName("isDay")
-    val isDay: Boolean?,
+    val isDay: Boolean,
     @SerializedName("precip")
-    val precip: Double?,
+    val precip: Double,
     @SerializedName("pressure")
-    val pressure: Double?,
+    val pressure: Double,
     @SerializedName("temp")
-    val temp: Double?,
+    val temp: Double,
     @SerializedName("wind")
-    val wind: Double?,
+    val wind: Double,
     @SerializedName("windDir")
-    val windDir: Int?,
+    val windDir: Int,
     @SerializedName("windGust")
-    val windGust: Double?
+    val windGust: Double
 )

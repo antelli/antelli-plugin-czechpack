@@ -6,19 +6,19 @@ import java.util.*
 
 data class Daily(
         @SerializedName("dataHours")
-    val dataHours: Int?,
+    val dataHours: Int,
         @SerializedName("icon")
-    val icon: Int?,
+    val icon: Int,
         @SerializedName("localDate")
-    val localDate: Date?,
+    val localDate: Date,
         @SerializedName("snowPrecip")
-    val snowPrecip: Int?,
+    val snowPrecip: Int,
         @SerializedName("sunrise")
-    val sunrise: String?,
+    val sunrise: String,
         @SerializedName("sunset")
-    val sunset: String?,
+    val sunset: String,
         @SerializedName("tempMax")
-    val tempMax: Double?,
+    val tempMax: Double,
         @SerializedName("tempMin")
-    val tempMin: Double?
+    val tempMin: Double
 )
