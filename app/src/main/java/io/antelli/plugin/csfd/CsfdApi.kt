@@ -37,7 +37,7 @@ class CsfdApi : BaseWebApi() {
 
     }
 
-    fun getMovieDetail(link: String?): Observable<Movie> {
+    fun getMovieDetail(link: String): Observable<Movie> {
         return getHtmlFrom(link).map(object : Function<String, Movie> {
             @Throws(Exception::class)
             override fun apply(html: String): Movie? {

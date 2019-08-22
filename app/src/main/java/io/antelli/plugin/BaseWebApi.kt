@@ -19,7 +19,7 @@ abstract class BaseWebApi {
 
     var client: OkHttpClient? = null
 
-    protected fun getHtmlFrom(url: String?): Observable<String> {
+    protected fun getHtmlFrom(url: String): Observable<String> {
         return Observable.defer(Callable<ObservableSource<Response>> {
             try {
                 if (client == null){
@@ -35,10 +35,10 @@ abstract class BaseWebApi {
             } catch (e: IOException) {
                 return@Callable Observable.error(e)
             }
-        }).map { response -> response.body()!!.string() }
+        }).map { response -> response.body!!.string() }
     }
 
-    protected fun request(request: Request?): Observable<String> {
+    protected fun request(request: Request): Observable<String> {
         return Observable.defer(Callable<ObservableSource<Response>> {
             try {
                 if (client == null){
@@ -54,7 +54,7 @@ abstract class BaseWebApi {
             } catch (e: IOException) {
                 return@Callable Observable.error(e)
             }
-        }).map { response -> response.body()!!.string() }
+        }).map { response -> response.body!!.string() }
     }
 
     protected fun parse(html: String, regexp: String): ParsedResult {
