@@ -27,7 +27,7 @@ class AlzaPlugin : AntelliPlugin() {
     }
 
     override fun canAnswer(question: Question, callback: ICanAnswerCallback) {
-        callback.canAnswer(question.containsOne("kolik stojí", "kolik stojej", "alza", "alze", "hledej", "najdi", "hledat", "najít", "za kolik"))
+        callback.canAnswer(question.containsOne("kolik stojí", "kolik stojej", "alza", "alze", "za kolik"))
     }
 
 }

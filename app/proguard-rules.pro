@@ -32,6 +32,7 @@
 -keepattributes Signature
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
+-dontwarn kotlinx.coroutines.*
 
 # OkHttp
 -dontwarn okhttp3.**
@@ -49,6 +50,12 @@
 }
 -dontwarn com.bumptech.glide.integration.okhttp.**
 
+#Crashlytics
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
 
 #Antelli SDK
 -keepnames class io.antelli.sdk.**

@@ -23,7 +23,8 @@ class SeznamPocasiSettingsViewModel(application: Application) : BaseViewModel(ap
 
     var isGps: ObservableField<Boolean> = ObservableField(false)
 
-    init {
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onCreate(){
         val gpsSettings = Prefs.seznamPocasiGps
         if (gpsSettings && ContextCompat.checkSelfPermission(this.getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) == PermissionChecker.PERMISSION_GRANTED) {
             isGps.set(true)

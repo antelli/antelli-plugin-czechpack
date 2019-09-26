@@ -17,14 +17,13 @@ object Prefs {
     private const val IDNES_TV_CHANNELS = "IDNES_TV_CHANNELS"
     private const val RECEPTY_GROCERY_SERVICE = "RECEPTY_GROCERY_SERVICE"
 
-
     val GROCERY_PROVIDER_TESCO = "Tesco"
     val GROCERY_PROVIDER_ROHLIK = "Rohlík"
     val GROCERY_PROVIDER_KOSIK = "Košík"
 
     private val prefs = App.get().getSharedPreferences("plugins-cs", Context.MODE_PRIVATE)
 
-    var seznamPocasiCity: String
+    var seznamPocasiCity: String?
         get() = load(SEZNAM_POCASI_CITY, "praha")
         set(value) {
             save(SEZNAM_POCASI_CITY, value)
@@ -37,9 +36,9 @@ object Prefs {
         }
 
     val idnesTvChannels: String
-        get() = load(IDNES_TV_CHANNELS, "1,2,3,4,78,330,302,332,92,226,331,474,89,95,18,463,24,19")
+        get() = load(IDNES_TV_CHANNELS, "1,2,3,4,78,330,302,332,92,226,331,474,89,95,18,463,24,19")!!
 
-    var receptyGroceryService: String
+    var receptyGroceryService: String?
         get() = load(RECEPTY_GROCERY_SERVICE, GROCERY_PROVIDER_TESCO)
         set(service) {
             save(RECEPTY_GROCERY_SERVICE, service)
@@ -70,7 +69,7 @@ object Prefs {
         edit().putLong(name, value).apply()
     }
 
-    private fun save(name: String, value: String) {
+    private fun save(name: String, value: String?) {
         edit().putString(name, value).apply()
     }
 
@@ -86,7 +85,7 @@ object Prefs {
         return prefs.getLong(name, defaultValue)
     }
 
-    private fun load(name: String, defaultValue: String): String {
+    private fun load(name: String, defaultValue: String): String? {
         return prefs.getString(name, defaultValue)
     }
 

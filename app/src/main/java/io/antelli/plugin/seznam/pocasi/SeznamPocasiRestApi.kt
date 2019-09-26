@@ -4,6 +4,7 @@ import io.antelli.plugin.BaseRestApi
 import io.antelli.plugin.seznam.pocasi.entity.WeatherDescription
 import io.antelli.plugin.seznam.pocasi.entity.Weather
 import io.reactivex.Observable
+import java.util.*
 
 class SeznamPocasiRestApi : BaseRestApi<SeznamPocasiApiDef>() {
     override val baseUrl
@@ -14,12 +15,12 @@ class SeznamPocasiRestApi : BaseRestApi<SeznamPocasiApiDef>() {
     fun getCurrent(lat : Double?, lon : Double?): Observable<Weather> {
         val latitude = lat ?: 50.09
         val longitude = lon ?: 14.42
-        return api.getForecast(String.format("%.2f", latitude), String.format("%.2f", longitude), "place_name,current")
+        return api.getForecast(String.format(Locale.US,"%.2f", latitude), String.format(Locale.US,"%.2f", longitude), "place_name,current")
     }
 
     fun getForecast(lat : Double?, lon : Double?): Observable<Weather> {
         val latitude = lat ?: 50.09
         val longitude = lon ?: 14.42
-        return api.getForecast(String.format("%.2f", latitude), String.format("%.2f", longitude), "place_name,current,daily,entries")
+        return api.getForecast(String.format(Locale.US,"%.2f", latitude), String.format(Locale.US,"%.2f", longitude), "place_name,current,daily,entries")
     }
 }

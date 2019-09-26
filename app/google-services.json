@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "351478130307",
+    "firebase_url": "https://antelli-assistant.firebaseio.com",
+    "project_id": "antelli-assistant",
+    "storage_bucket": "antelli-assistant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351478130307:android:fe1871b47a7e602f",
+        "android_client_info": {
+          "package_name": "io.antelli.assistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351478130307-79hk0p472qcsbusb4nhutbp34n0ui2tk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.antelli.assistant",
+            "certificate_hash": "7c8c7be3a4ac06ee93f1aaed4981129d8c4db59e"
+          }
+        },
+        {
+          "client_id": "351478130307-aq06sjk0ul5kj72fcbf94nkha8t1qp68.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.antelli.assistant",
+            "certificate_hash": "2f0773bd1cec1b53b1f941be219aff58470746b4"
+          }
+        },
+        {
+          "client_id": "351478130307-0207ga51d3c15s4kebu711j6c2n5l29i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSiqidhOSVMAAxOQWK0XQEh_S7GNDcnU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351478130307-vpgvjfuu8dddk9jg3tv5711tig6du7ve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351478130307:android:4dc9e8b2d21411de865db6",
+        "android_client_info": {
+          "package_name": "io.antelli.plugin.czechpack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351478130307-t9m4ur2v6h0k1rnb73t6kd11op3dba28.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.antelli.plugin.czechpack",
+            "certificate_hash": "2f0773bd1cec1b53b1f941be219aff58470746b4"
+          }
+        },
+        {
+          "client_id": "351478130307-0207ga51d3c15s4kebu711j6c2n5l29i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSiqidhOSVMAAxOQWK0XQEh_S7GNDcnU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351478130307-vpgvjfuu8dddk9jg3tv5711tig6du7ve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351478130307:android:5518fd028eb5a3bf",
+        "android_client_info": {
+          "package_name": "io.antelli.plugin.mihome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351478130307-0207ga51d3c15s4kebu711j6c2n5l29i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSiqidhOSVMAAxOQWK0XQEh_S7GNDcnU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351478130307-vpgvjfuu8dddk9jg3tv5711tig6du7ve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

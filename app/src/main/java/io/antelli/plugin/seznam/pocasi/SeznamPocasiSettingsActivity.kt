@@ -18,14 +18,14 @@ class SeznamPocasiSettingsActivity : MvvmActivity<ActivitySeznamPocasiSettingsBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        permissions = RxPermissions(this)
         setSupportActionBar(binding.toolbar)
         binding.v = this
-        permissions = RxPermissions(this)
     }
 
     override fun gpsCheckedChanged(checked: Boolean) {
         if (checked) {
-            permissions!!.request(Manifest.permission.ACCESS_COARSE_LOCATION).subscribe { aBoolean -> viewModel.isGps.set(aBoolean) }
+            permissions?.request(Manifest.permission.ACCESS_COARSE_LOCATION)?.subscribe { checked -> viewModel.isGps.set(checked) }
         }
     }
 }
