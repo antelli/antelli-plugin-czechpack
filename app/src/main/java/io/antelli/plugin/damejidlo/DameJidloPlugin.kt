@@ -51,7 +51,7 @@ class DameJidloPlugin : BaseWebPlugin<DameJidloApi>() {
             /*api.search(query)
                     .map { convert(it) }
                     .subscribe({callback.answer(it)},{callback.answer(ErrorAnswer())})*/
-            callback.answer(Answer().setAutoRun(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.damejidlo.cz/vyhledavani?q=$query")))
+            callback.answer(Answer().setAutoRun(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.damejidlo.cz/search?q=$query")))
                     .addItem(AnswerItem().setText("Hledám $query přes Dáme Jídlo").setSpeech("Hledám $query přes Dáme Jídlo")))
             reset()
         }

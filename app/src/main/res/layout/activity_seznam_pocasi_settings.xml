@@ -29,7 +29,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-    <androidx.appcompat.widget.SwitchCompat
+    <Switch
         android:id="@+id/switch1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

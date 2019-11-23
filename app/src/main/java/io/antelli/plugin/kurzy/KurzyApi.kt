@@ -16,7 +16,7 @@ class KurzyApi : BaseWebApi() {
                     val quantityDecimal = BigDecimal(quantity)
                     val result = CurrencyRate()
                     result.link = link
-                    val parsed = parse(html, "adv_topclient1\">.*?src=\"(.*?)\".*?src=\"(.*?)\".*?akt_kurz.*?font-size:26px\">(.*?)<br.*?<b.*?>(.*?)</b>")
+                    val parsed = parse(html, "adv_topclient1\">.*?src=\"(.*?)\".*?src=\"(.*?)\".*?akt_kurz.*?font-size:26px.*?>(.*?)<br.*?<b.*?>(.*?)</b>")
 
                     if (!parsed.isEmpty) {
                         val row = parsed.getRow(0)

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="svatky_name">České svátky</string>
+    <string name="svatky_description">Databáze českých svátků</string>
+    <string name="svatky_samples">
+        Kdo má svátek;
+        Kdy má svátek Petr;
+        Kdo má svátek 24. prosince;
+    </string>
+</resources>

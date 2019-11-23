@@ -12,7 +12,7 @@ data class Daily(
         @SerializedName("localDate")
     val localDate: Date,
         @SerializedName("snowPrecip")
-    val snowPrecip: Int,
+    val snowPrecip: Double,
         @SerializedName("sunrise")
     val sunrise: String,
         @SerializedName("sunset")
