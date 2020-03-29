@@ -12,7 +12,7 @@ if (keystorePropertiesFile.exists()) {
 
 final VERSION_MAJOR = 1
 final VERSION_MINOR = 0
-final VERSION_PATCH = 8
+final VERSION_PATCH = 9
 
 android {
     compileSdkVersion 29

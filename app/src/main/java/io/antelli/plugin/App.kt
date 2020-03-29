@@ -22,6 +22,6 @@ class App : Application() {
         super.onCreate()
         instance = this
         FirebaseApp.initializeApp(this)
-        SqlScoutServer.create(this, getPackageName());
+        SqlScoutServer.create(this, packageName);
     }
 }

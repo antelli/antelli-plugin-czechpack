@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="covid19_name">Onemocnění aktuálně</string>
+    <string name="covid19_description">Aktuální informace o počtu nakažených v ČR</string>
+    <string name="covid19_samples">
+        Koronavirus;
+        Kolik je nakažených?;
+        Kolik je mrtvých?;
+        Kolik je uzdravilo?;
+        Kolik je testovaných?;
+    </string>
+</resources>

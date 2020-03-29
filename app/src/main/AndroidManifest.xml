@@ -508,6 +508,34 @@
                 android:value="@string/antelli_api_version" />
         </service>
 
+        <service android:name="io.antelli.plugin.covid19.Covid19Plugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/covid19_name" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/covid19_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/covid19_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/covid19" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
+
     </application>
 
 </manifest>

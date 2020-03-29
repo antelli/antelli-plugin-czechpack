@@ -20,13 +20,17 @@ import io.reactivex.Observable
 
 
 class KurzyPlugin : BaseWebPlugin<KurzyApi>() {
+
+    val currencyKeywords = arrayOf("eur", "libr", "liber", "dolar", "korun", "rupi", "pes", "juan", "jen", "kun", "rubl", "šekel", "real", "lev", "rand", "won", "forint", "ring", "zlot", "frank", "baht", "lir",
+            "čínsk", "japonsk", "chorvatsk", "rusk", "izraelsk", "brazilsk", "bulharsk", "jihoafrick", "jihokorejsk", "maďarsk", "malajsijsk", "polsk", "rumunsk", "švýcarsk", "thajsk", "tureck")
+
     override fun initApi(): KurzyApi {
         return KurzyApi()
     }
 
     @Throws(RemoteException::class)
     override fun canAnswer(question: Question, callback: ICanAnswerCallback) {
-        callback.canAnswer(question.containsOne("kolik je", "kolik jsou", "kurz") && !question.contains("hodin") && !question.equals("kolik je"))
+        callback.canAnswer(question.containsOneWord("kolik je", "kolik jsou", "kurz") && question.containsOne(*currencyKeywords))
     }
 
     @Throws(RemoteException::class)

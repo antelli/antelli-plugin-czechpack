@@ -255,6 +255,7 @@ abstract class SvatkyDatabase : RoomDatabase() {
                             db.execSQL("INSERT INTO svatek(den,mesic,jmeno) VALUES (2,8,'Gustav');")
                             db.execSQL("INSERT INTO svatek(den,mesic,jmeno) VALUES (3,8,'Miluše');")
                             db.execSQL("INSERT INTO svatek(den,mesic,jmeno) VALUES (4,8,'Dominik');")
+                            db.execSQL("INSERT INTO svatek(den,mesic,jmeno) VALUES (4,8,'Dominika');")
                             db.execSQL("INSERT INTO svatek(den,mesic,jmeno) VALUES (5,8,'Kristián');")
                             db.execSQL("INSERT INTO svatek(den,mesic,jmeno) VALUES (6,8,'Oldřiška');")
                             db.execSQL("INSERT INTO svatek(den,mesic,jmeno) VALUES (7,8,'Lada');")
