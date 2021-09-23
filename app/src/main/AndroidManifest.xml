@@ -114,6 +114,33 @@
                 android:name="api_version"
                 android:value="@string/antelli_api_version" />
         </service>
+        <service android:name="io.antelli.plugin.inpocasi.InPocasiPlugin">
+            <intent-filter>
+                <action android:name="io.antelli.assistant.ANSWER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="name"
+                android:value="@string/inpocasi_title" />
+            <meta-data
+                android:name="author"
+                android:value="@string/author" />
+            <meta-data
+                android:name="email"
+                android:value="@string/email" />
+            <meta-data
+                android:name="description"
+                android:value="@string/inpocasi_description" />
+            <meta-data
+                android:name="samples"
+                android:value="@string/inpocasi_samples" />
+            <meta-data
+                android:name="icon"
+                android:value="@drawable/inpocasi" />
+            <meta-data
+                android:name="api_version"
+                android:value="@string/antelli_api_version" />
+        </service>
         <service android:name="io.antelli.plugin.idnes.tv.IdnesTvPlugin">
             <intent-filter>
                 <action android:name="io.antelli.assistant.ANSWER" />
