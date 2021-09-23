@@ -28,7 +28,7 @@ class SeznamSearchService : AntelliPlugin() {
     override fun answer(question: Question, callback: IAnswerCallback) {
         val answer = Answer()
         val subject = question.removeWords(*keywords)
-        answer.setAutoRun(Intent(Intent.ACTION_VIEW, Uri.parse("https://search.seznam.cz/?q=$subject")))
+        answer.autoRun = Intent(Intent.ACTION_VIEW, Uri.parse("https://search.seznam.cz/?q=$subject"))
         callback.answer(answer)
     }
 
@@ -39,9 +39,5 @@ class SeznamSearchService : AntelliPlugin() {
 
     override fun reset() {
 
-    }
-
-    override fun getSettingsActivity(): Class<out Activity>? {
-        return null
     }
 }

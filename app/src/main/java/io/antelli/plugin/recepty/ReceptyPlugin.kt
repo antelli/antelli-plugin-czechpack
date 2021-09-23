@@ -3,6 +3,7 @@ package io.antelli.plugin.recepty
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.RemoteException
 
 import java.util.ArrayList
@@ -20,9 +21,11 @@ import io.antelli.sdk.model.Command
 import io.antelli.sdk.model.Hint
 import io.antelli.sdk.model.Question
 import io.reactivex.Observable
+import kotlin.reflect.KClass
 
 class ReceptyPlugin : BaseWebPlugin<ReceptyApi>() {
 
+    override val settingsActivity = ReceptySettingsActivity::class
     internal var keywords = arrayOf("jak se vaří", "jak se peče", "jak uvařit", "jak se dělá", "jak upéct", "jak uvařim", "jak uvařím", "jak uvařit", "jak udělat", "recept na", "recept")
     internal var removeWords = arrayOf("najdi mi", "najdi", "hledej")
 
@@ -59,16 +62,21 @@ class ReceptyPlugin : BaseWebPlugin<ReceptyApi>() {
         val groceryProvider = Prefs.receptyGroceryService
 
         val result = Answer()
-        result.addItem(AnswerItem().setTitle(detail.name)
-                .setSubtitle("Hodnocení: " + detail.rating)
-                .setText("Doba přípravy: " + detail.time).setType(AnswerItem.TYPE_CARD))
+        result.addItem(AnswerItem().apply {
+            title = detail.name
+            subtitle = "Hodnocení: " + detail.rating
+            text = "Doba přípravy: " + detail.time
+            type = AnswerItem.TYPE_CARD
+        })
 
         if (detail.ingredients != null) {
             for (ingredientGroup in detail.ingredients!!) {
-                val groupItem = AnswerItem()
-                        .setType(AnswerItem.TYPE_CARD)
-                        .setTitle(if (ingredientGroup.name != null && !ingredientGroup.name!!.isEmpty()) ingredientGroup.name else null)
-                        .setSubtitle("Suroviny")
+                val groupItem = AnswerItem().apply {
+                    type = AnswerItem.TYPE_CARD
+                    title = if (ingredientGroup.name != null && !ingredientGroup.name!!.isEmpty()) ingredientGroup.name else null
+                    subtitle = "Suroviny"
+                }
+
                 val hints = ArrayList<Hint>()
                 if (ingredientGroup.ingredients != null) {
                     val sb = StringBuilder()
@@ -84,31 +92,39 @@ class ReceptyPlugin : BaseWebPlugin<ReceptyApi>() {
                             hints.add(Hint(ingredient.name, Command(Intent(Intent.ACTION_VIEW, Uri.parse(link)))))
                         }
                     }
-                    groupItem.setText(sb.toString().trim { it <= ' ' })
-                    groupItem.setSpeech((groupItem.title ?: "") + " " + groupItem.subtitle + ": " + groupItem.text?.replace(" ks", " kusů"))
+                    groupItem.text = sb.toString().trim { it <= ' ' }
+                    groupItem.speech = (groupItem.title ?: "") + " " + groupItem.subtitle + ": " + groupItem.text?.replace(" ks", " kusů")
                 }
-                groupItem.setHints(hints)
+                groupItem.hints = hints
                 result.addItem(groupItem)
             }
             if (detail.steps != null) {
                 for (cookingStep in detail.steps!!) {
-                    result.addItem(AnswerItem().setType(AnswerItem.TYPE_CARD)
-                            .setText(cookingStep.description)
-                            .setSpeech(cookingStep.description))
+                    result.addItem(AnswerItem().apply {
+                        type = AnswerItem.TYPE_CARD
+                        text = cookingStep.description
+                        speech = cookingStep.description
+                    })
                 }
             }
         }
 
         if (detail.similarRecipes != null && detail.similarRecipes!!.size != 0) {
-            val similarItems = AnswerItem().setType(AnswerItem.TYPE_CAROUSEL_MEDIUM).setTitle("Podobné recepty")
+            val similarItems = AnswerItem().apply {
+                type = AnswerItem.TYPE_CAROUSEL_MEDIUM
+                title = "Podobné recepty"
+            }
             val subItems = ArrayList<AnswerItem>()
             for (recipe in detail.similarRecipes!!) {
-                subItems.add(AnswerItem()
-                        .setTitle(recipe.name)
-                        .setImage(recipe.image)
-                        .setCommand(Command(ACTION_DETAIL).putString(PARAM_LINK, recipe.link)))
+                subItems.add(AnswerItem().apply {
+                    title = recipe.name
+                    image = recipe.image
+                    command = Command(ACTION_DETAIL).apply {
+                        putString(PARAM_LINK, recipe.link)
+                    }
+                })
             }
-            similarItems.setItems(subItems)
+            similarItems.items = subItems
             result.addItem(similarItems)
         }
 
@@ -118,25 +134,27 @@ class ReceptyPlugin : BaseWebPlugin<ReceptyApi>() {
     private fun convert(recipes: List<Recipe>?): Answer {
         val result = Answer()
         val text = "Tady jsou recepty, které jsem našla"
-        result.addItem(AnswerItem().setText(text).setSpeech(text))
+        result.addItem(AnswerItem().apply {
+            this.text = text
+            speech = text
+        })
 
         if (recipes != null) {
             for (recipe in recipes) {
-                result.addItem(AnswerItem()
-                        .setTitle(recipe.name)
-                        .setSubtitle(recipe.time)
-                        .setText(recipe.text)
-                        .setSpeech(recipe.name)
-                        .setImage(recipe.image)
-                        .setType(AnswerItem.TYPE_CARD)
-                        .setCommand(Command(ACTION_DETAIL).putString(PARAM_LINK, recipe.link)))
+                result.addItem(AnswerItem().apply {
+                    title = recipe.name
+                    subtitle = recipe.time
+                    this.text = recipe.text
+                    speech = recipe.name
+                    image = recipe.image
+                    type = AnswerItem.TYPE_CARD
+                    command = Command(ACTION_DETAIL).apply {
+                        putString(PARAM_LINK, recipe.link)
+                    }
+                })
             }
         }
         return result
-    }
-
-    override fun getSettingsActivity(): Class<out Activity>? {
-        return ReceptySettingsActivity::class.java
     }
 
     companion object {

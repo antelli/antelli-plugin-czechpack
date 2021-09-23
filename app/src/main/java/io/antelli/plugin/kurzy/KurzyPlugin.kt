@@ -46,14 +46,17 @@ class KurzyPlugin : BaseWebPlugin<KurzyApi>() {
     }
 
     private fun convert(rate: CurrencyRate): Answer {
-        return Answer().addItem(AnswerItem()
-                .setTitle(rate.multipliedRate)
-                .setSubtitle(rate.rate)
-                .setSpeech(rate.multipliedRate?.replace("=", "je"))
-                .setImage(rate.imageLinkCurrencyHistory)
-                .setImageScaleType(ImageView.ScaleType.FIT_START)
-                .setType(AnswerItem.TYPE_IMAGE)
-                .addHint(Hint("Zobrazit na webu", Command(Intent(Intent.ACTION_VIEW, Uri.parse(rate.link))))))
+        return Answer().apply {
+            addItem(AnswerItem().apply {
+                title = rate.multipliedRate
+                subtitle = rate.rate
+                speech = rate.multipliedRate?.replace("=", "je")
+                image = rate.imageLinkCurrencyHistory
+                imageScaleType = ImageView.ScaleType.FIT_START
+                type = AnswerItem.TYPE_IMAGE
+                addHint(Hint("Zobrazit na webu", Command(Intent(Intent.ACTION_VIEW, Uri.parse(rate.link)))))
+            })
+        }
     }
 
     private fun getCurrency(query: Question): String {

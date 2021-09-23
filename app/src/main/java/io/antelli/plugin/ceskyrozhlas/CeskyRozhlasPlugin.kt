@@ -49,7 +49,14 @@ class CeskyRozhlasPlugin : AntelliPlugin() {
             text = "Český rozhlas Radiožurnál"
         }
 
-        callback.answer(Answer().addItem(AnswerItem().setType(AnswerItem.TYPE_AUDIO).setTitle(text).setSpeech("Zapínám $text").setStream(url)))
+        callback.answer(Answer().apply {
+            addItem(AnswerItem().apply {
+                type = AnswerItem.TYPE_AUDIO
+                title = text
+                speech = "Zapínám $text"
+                stream = url
+            })
+        })
     }
 
     override fun command(command: Command, callback: IAnswerCallback) {

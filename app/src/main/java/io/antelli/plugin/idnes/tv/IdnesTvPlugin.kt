@@ -39,7 +39,5 @@ class IdnesTvPlugin : BaseWebPlugin<IdnesTvApi>() {
 
     }
 
-    override fun getSettingsActivity(): Class<out Activity>? {
-        return IdnesTvSettingsActivity::class.java
-    }
+    override val settingsActivity = IdnesTvSettingsActivity::class
 }

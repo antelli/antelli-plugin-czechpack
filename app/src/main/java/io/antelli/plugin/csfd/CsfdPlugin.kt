@@ -28,22 +28,22 @@ class CsfdPlugin : BaseWebPlugin<CsfdApi>() {
     override fun answer(question: Question, callback: IAnswerCallback) {
         if (question.containsOne("hledej", "najdi", "hledat")) {
             api.search(removeKewords(question)!!)
-                    .subscribe(Consumer{ movies -> callback.answer(convert(movies)) }, error(callback))
+                    .subscribe(Consumer { movies -> callback.answer(convert(movies)) }, error(callback))
         } else {
             api.search(removeKewords(question)!!)
-                    .flatMap{ movies ->
+                    .flatMap { movies ->
                         if (movies.size > 0) {
-                            return@flatMap api.search(removeKewords(question)).flatMap{api.getMovieDetail(movies.get(0).getLink())}
+                            return@flatMap api.search(removeKewords(question)).flatMap { api.getMovieDetail(movies.get(0).getLink()) }
                         }
                         io.reactivex.Observable.empty<Movie>()
                     }
-                    .subscribe(Consumer{ movie -> callback.answer(convertDetail(movie)) },
+                    .subscribe(Consumer { movie -> callback.answer(convertDetail(movie)) },
                             error(callback))
         }
     }
 
     private fun error(callback: IAnswerCallback): Consumer<Throwable> {
-        return Consumer{ throwable -> callback.answer(ErrorAnswer()) }
+        return Consumer { throwable -> callback.answer(ErrorAnswer()) }
     }
 
     private fun removeKewords(q: Question): String {
@@ -54,14 +54,17 @@ class CsfdPlugin : BaseWebPlugin<CsfdApi>() {
         val result = Answer()
         if (movies != null) {
             for (movie in movies) {
-                result.addItem(AnswerItem()
-                        .setTitle(movie.name)
-                        .setSubtitle(movie.genre)
-                        .setText("\n\n\n")
-                        .setSpeech(movie.name)
-                        .setImage(movie.poster)
-                        .setType(AnswerItem.TYPE_CARD)
-                        .setCommand(Command(ACTION_MOVIE_DETAIL).putString(PARAM_LINK, movie.link)))
+                result.addItem(AnswerItem().apply {
+                    title = movie.name
+                    subtitle = movie.genre
+                    text = "\n\n\n"
+                    speech = movie.name
+                    image = movie.poster
+                    type = AnswerItem.TYPE_CARD
+                    command = Command(ACTION_MOVIE_DETAIL).apply {
+                        putString(PARAM_LINK, movie.link)
+                    }
+                })
             }
         }
         return result
@@ -73,8 +76,8 @@ class CsfdPlugin : BaseWebPlugin<CsfdApi>() {
 
     override fun command(command: Command, callback: IAnswerCallback) {
         when (command.action) {
-            ACTION_MOVIE_DETAIL -> api.getMovieDetail(command.getString(PARAM_LINK))
-                    .subscribe(Consumer{ movie -> callback.answer(convertDetail(movie)) }, error(callback))
+            ACTION_MOVIE_DETAIL -> api.getMovieDetail(command.getString(PARAM_LINK) ?: "")
+                    .subscribe(Consumer { movie -> callback.answer(convertDetail(movie)) }, error(callback))
         }
     }
 
@@ -82,35 +85,39 @@ class CsfdPlugin : BaseWebPlugin<CsfdApi>() {
         val result = Answer()
 
         //Headline item
-        result.addItem(AnswerItem()
-                .setType(AnswerItem.TYPE_CARD)
-                .setTitle(movie.name)
-                .setSubtitle(movie.genre)
-                .setText(movie.origin)
-                .setLargeText(movie.rating)
-                .setImage(movie.poster)
-                .setSpeech(movie.name + ". " + movie.rating + ". " + movie.genre + ". " + movie.description)
-                .addHint(Hint("ČSFD", Command(getCsfdIntent(movie))))
-                .addHint(Hint("Trailer", Command(getTrailerIntent(movie))))
-                .addHint(Hint("Soundtrack", Command(getSoundtrackIntent(movie))))
-        )
+        result.addItem(AnswerItem().apply {
+            type = AnswerItem.TYPE_CARD
+            title = movie.name
+            subtitle = movie.genre
+            text = movie.origin
+            largeText = movie.rating
+            image = movie.poster
+            speech = movie.name + ". " + movie.rating + ". " + movie.genre + ". " + movie.description
+            addHint(Hint("ČSFD", Command(getCsfdIntent(movie))))
+            addHint(Hint("Trailer", Command(getTrailerIntent(movie))))
+            addHint(Hint("Soundtrack", Command(getSoundtrackIntent(movie))))
+        })
 
         if (movie.description != null) {
-            result.addItem(AnswerItem().setType(AnswerItem.TYPE_CARD)
-                    .setTitle("Obsah")
-                    .setText(movie.description))
+            result.addItem(AnswerItem().apply {
+                type = AnswerItem.TYPE_CARD
+                title = "Obsah"
+                text = movie.description
+            })
         }
 
         for (artists in movie.artists) {
-            val artistsItem = AnswerItem()
-                    .setType(AnswerItem.TYPE_CAROUSEL_SMALL)
-                    .setTitle(artists.name)
+            val artistsItem = AnswerItem().apply {
+                type = AnswerItem.TYPE_CAROUSEL_SMALL
+                title = artists.name
+            }
 
             for (artist in artists.artists) {
-                artistsItem.addItem(AnswerItem()
-                        .setTitle(artist.name)
-                        .setImage("https://img.csfd.cz/assets/b87/images/poster-free.png")
-                        .setCommand(Command(Intent(Intent.ACTION_VIEW, Uri.parse(artist.link)))))
+                artistsItem.addItem(AnswerItem().apply {
+                    title = artist.name
+                    image = "https://img.csfd.cz/assets/b87/images/poster-free.png"
+                    command = Command(Intent(Intent.ACTION_VIEW, Uri.parse(artist.link)))
+                })
                 //Log.d("img", artistsItem.getImage());
             }
 

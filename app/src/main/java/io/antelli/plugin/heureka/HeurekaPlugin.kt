@@ -18,8 +18,13 @@ class HeurekaPlugin : AntelliPlugin() {
 
     override fun answer(question: Question, callback: IAnswerCallback) {
         val query = question.removeWords("na heurece", "heureka", "hledat", "hledej", "najdi", "kolik stojí", "kolik stojej")
-        callback.answer(Answer().setAutoRun(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.heureka.cz/?h%5Bfraze%5D="+query.replace(" ", "+"))))
-                .addItem(AnswerItem().setText("Hledám $query na Heurece").setSpeech("Hledám $query na Heurece")))
+        callback.answer(Answer().apply {
+            autoRun = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.heureka.cz/?h%5Bfraze%5D="+query.replace(" ", "+")))
+            addItem(AnswerItem().apply {
+                text = "Hledám $query na Heurece"
+                speech = "Hledám $query na Heurece"
+            })
+        })
     }
 
     override fun reset() {

@@ -16,11 +16,11 @@ class Covid19Plugin : BaseWebPlugin<Covid19Api>() {
     override fun answer(question: Question, callback: IAnswerCallback) {
         api.getData().subscribe({
             when{
-                question.contains("test") -> callback.answer(Answer("Aktuálně je otestováno ${it.tests} lidí."))
-                question.contains("nakažen") -> callback.answer(Answer("Aktuálně máme ${it.infected} nakažených."))
+                question.contains("test") -> callback.answer(Answer("Celkem bylo provedeno ${it.tests} testů."))
+                question.contains("nakažen") -> callback.answer(Answer("Aktuálně máme ${it.infected - it.recovered - it.dead} nakažených"))
                 question.contains("uzdrav") -> callback.answer(Answer("Z koronaviru se už uzdravilo ${it.recovered} lidí."))
                 question.contains("mrtv") -> callback.answer(Answer("Na koronavirus zemřelo už ${it.dead} lidí."))
-                else -> callback.answer(Answer("Aktuálně máme ${it.infected} nakažených, ${it.dead} mrtvých a ${it.recovered} uzdravených. Otestováno bylo ${it.tests} lidí."))
+                else -> callback.answer(Answer("Aktuálně máme ${it.infected - it.recovered - it.dead} nakažených, celkem onemocnělo ${it.infected} lidí, z toho se ${it.recovered} uzdravilo a ${it.dead} zemřelo. Bylo provedeno ${it.tests} testů."))
             }
         },{
             callback.answer(Answer("Nepodařilo se zjistit aktuální data o koronaviru, pokud problém přetrvává, kontaktujte vývojáře."))
@@ -32,7 +32,7 @@ class Covid19Plugin : BaseWebPlugin<Covid19Api>() {
     }
 
     override fun canAnswer(question: Question, callback: ICanAnswerCallback) {
-        return callback.canAnswer(question.containsOne("koronavir", "coronavirus", "nakažen", "mrtvých", "zemřelo", "uzdrav", "testovan", "testován"))
+        return callback.canAnswer(question.containsOne("koronavir", "coronavir", "nakažen", "mrtvých", "zemřelo", "uzdrav", "testovan", "testován"))
     }
 
     override fun initApi(): Covid19Api {

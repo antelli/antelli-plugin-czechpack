@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="inpocasi_title">In-počasí</string>
+    <string name="inpocasi_description">Předpověď počasí z in-pocasi.cz</string>
+    <string name="inpocasi_samples">
+        Počasí;
+        Jak bude zítra;
+        Jak bude v pátek;
+    </string>
+    <bool name="inpocasi_settings">false</bool>
+</resources>

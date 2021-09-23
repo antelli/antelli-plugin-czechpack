@@ -47,8 +47,6 @@ class IdnesTvApi : BaseWebApi() {
                 }.flatMap { resp -> getChannels() }
 
     fun answer(question: Question): Observable<Answer> {
-        val answer = Answer()
-
         date = null
         if (question.contains(" bud")) {
             date = DateTimeCortex.getDateTimeFromString(question).time
@@ -56,18 +54,18 @@ class IdnesTvApi : BaseWebApi() {
 
         val finalDate = date
         return Observable.just(mobileVersionSet)
-                .flatMap<Boolean> { aBoolean ->
-                    if (aBoolean) {
+                .flatMap{
+                    if (it) {
                         return@flatMap Observable.just(mobileVersionSet)
                     } else {
                         return@flatMap Observable.just(mobileVersionSet).flatMap{getHtmlFrom("$URL_BASE/?setver=touch")
                                 .map { s -> true }
-                                .doOnNext { aBoolean1 -> mobileVersionSet = true }}
+                                .doOnNext { mobileVersionSet = true }}
                     }
                 }
-                .flatMap { aBoolean -> getChannels() }
-                .flatMap { result -> setChannelsCookie() }
-                .flatMap { str -> getProgramSource(finalDate) }
+                .flatMap { getChannels() }
+                .flatMap { setChannelsCookie() }
+                .flatMap { getProgramSource(finalDate) }
                 .map { source -> processResponse(source) }
     }
 
@@ -82,15 +80,16 @@ class IdnesTvApi : BaseWebApi() {
     private fun processResponse(source: String): Answer {
 
         val result = Answer()
-        val m = Pattern.compile("<a class=\"art-tv\".*?href=\"(.*?)\".*?image:url\\('(.*?)'\\).*?\"data\">(.*?)<ul>(.*?)</ul>", Pattern.DOTALL).matcher(source)
+        val m = Pattern.compile("class=\"art-tv\".*?href=\"(.*?)\".*?image:url\\('(.*?)'\\).*?\"data\">(.*?)<ul>(.*?)</ul>", Pattern.DOTALL).matcher(source)
         var matcherUpcoming: Matcher
         var matcherCurrent: Matcher
 
         var item: AnswerItem
         while (m.find()) {
-            item = AnswerItem()
-                    .setType(AnswerItem.TYPE_CARD)
-                    .setImageScaleType(ImageView.ScaleType.FIT_CENTER)
+            item = AnswerItem().apply {
+                type = AnswerItem.TYPE_CARD
+                imageScaleType = ImageView.ScaleType.FIT_CENTER
+            }
 
             matcherCurrent = Pattern.compile("<h3>(.*?)</h3>.*?width:(.*?)%", Pattern.DOTALL).matcher(m.group(3))
             var hasCurrent = false
@@ -98,14 +97,14 @@ class IdnesTvApi : BaseWebApi() {
             val link = removeHtmlTags(m.group(1))
             val chId = Integer.parseInt(link.substring(link.indexOf("channel=") + 8, link.indexOf("&")))
             val ch = channels!!.getChannel(chId)
-            item.setImage(ch?.logo)
+            item.image = ch?.logo
 
             if (matcherCurrent.find()) {
                 hasCurrent = true
                 val name = removeHtmlTags(matcherCurrent.group(1))
-                item.setTitle(ch?.name)
-                item.setSubtitle(name)
-                item.setSpeech(name + " na " + ch?.name)
+                item.title = ch?.name
+                item.subtitle = name
+                item.speech = name + " na " + ch?.name
                 /*  if (!matcherCurrent.group(2).equals("NaN")) {
                     item.setCurrentPercent(Integer.parseInt(matcherCurrent.group(2)));
                 } else {
@@ -120,14 +119,14 @@ class IdnesTvApi : BaseWebApi() {
             while (matcherUpcoming.find()) {
                 sb.append(matcherUpcoming.group(1).trim { it <= ' ' } + " " + removeHtmlTags(matcherUpcoming.group(2).trim { it <= ' ' }) + "\n")
                 if (i == 0 && !hasCurrent) {
-                    item.setTitle(channels?.getChannel(chId)?.name)
-                    item.setSpeech(removeHtmlTags(matcherUpcoming.group(2).trim { it <= ' ' } + " na " + channels?.getChannel(chId)?.name))
+                    item.title = channels?.getChannel(chId)?.name
+                    item.speech = removeHtmlTags(matcherUpcoming.group(2).trim { it <= ' ' } + " na " + channels?.getChannel(chId)?.name)
                 }
                 i++
             }
-            item.setText(sb.toString().trim { it <= ' ' })
+            item.text = sb.toString().trim { it <= ' ' }
 
-            item.setCommand(Command(Intent(Intent.ACTION_VIEW, Uri.parse(link))))
+            item.command = Command(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
             result.addItem(item)
         }
         return result

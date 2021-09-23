@@ -16,10 +16,10 @@ class CsfdApi : BaseWebApi() {
         return getHtmlFrom(BASE_URL + "/hledat/?q=" + query.replace(" ", "+"))
                 .map { html ->
                     val result = ArrayList<Movie>()
-                    val parsedList = parse(html, "Filmy</h2>(.*?)</ul>")
+                    val parsedList = parse(html, "Filmy</h2>(.*?)</section>")
 
                     if (!parsedList.isEmpty) {
-                        val parsed = parse(parsedList.first(0), "<li>.*?src=\"(.*?)\".*?href=\"(.*?)\".*?>(.*?)</.*?<p>(.*?)</p>.*?<p>(.*?)</p>.*?</li>")
+                        val parsed = parse(parsedList.first(0), "class=\"article-img\".*?src=\"(.*?)\".*?href=\"(.*?)\".*?film-title-name\">(.*?)</a.*?class=\"info\">(.*?)</.*?</article>")
 
                         if (!parsed.isEmpty) {
                             for (row in parsed.items) {
@@ -43,30 +43,29 @@ class CsfdApi : BaseWebApi() {
             override fun apply(html: String): Movie? {
 
                 var result: Movie? = null
-                val parsed = parse(html, "class=\"content\"(.*?)class=\"info\".*?<h1.*?>(.*?)</h1>.*?<ul class=\"names\">(.*?)</ul>.*?genre\">(.*?)</.*?origin\">(.*?)</.*?class=\"creators\"(.*?)footer(.*?)average\">(.*?)</h2>")
+                val parsed = parse(html, "<h1.*?>(.*?)</h1>.*?<ul class=\"film-names\">(.*?)</ul>.*?<div class=\"film-posters\">(.*?)</div>.*?rating-average\">(.*?)</div>.*?genres\">(.*?)</.*?origin\">(.*?)</div.*?class=\"creators\"(.*?)box-header(.*?)class=\"tabs\"")
 
-                //0 - poster
-                //1 - name
-                //2 - names
-                //3 - genre
-                //4 - origin
-                //5 - creators
-                //6 - description
-                //7 - rating
-
+                //0 - name
+                //1 - names
+                //2 - poster
+                //3 - ranking
+                //4 - genre
+                //5 - origin
+                //6 - creators
+                //7 - description
 
                 if (!parsed.isEmpty) {
                     result = Movie()
                     result.link = link
-                    result.poster = parsePoster(parsed.first(0))
-                    result.name = removeHtmlTags(parsed.first(1))
-                    val enName = parseEnName(parsed.first(2))
+                    result.poster = parsePoster(parsed.first(2))
+                    result.name = removeHtmlTags(parsed.first(0))
+                    val enName = parseEnName(parsed.first(1))
                     result.nameEn = enName ?: result.name
-                    result.genre = parsed.first(3)
-                    result.origin = removeHtmlTags(parsed.first(4))
-                    result.artists = parseArtistGroups(parsed.first(5))
-                    result.description = parseDescription(parsed.first(6))
-                    result.rating = parsed.first(7)
+                    result.genre = parsed.first(4)
+                    result.origin = removeHtmlTags(parsed.first(5))
+                    result.artists = parseArtistGroups(parsed.first(6))
+                    result.description = parseDescription(parsed.first(7))
+                    result.rating = parsed.first(3)
                 }
                 return result
             }
@@ -120,7 +119,7 @@ class CsfdApi : BaseWebApi() {
     }
 
     private fun parseDescription(html: String): String? {
-        val parsed = parse(html, "Obsah.*?</h3>.*?<li>(.*?)</li>")
+        val parsed = parse(html, "Obsah.*?</h3>.*?<p>(.*?)</p>")
         return if (!parsed.isEmpty) {
             removeHtmlTags(parsed.first(0)).trim { it <= ' ' }
         } else null

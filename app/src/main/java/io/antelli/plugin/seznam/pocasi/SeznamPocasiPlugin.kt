@@ -1,7 +1,6 @@
 package io.antelli.plugin.seznam.pocasi
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -9,8 +8,7 @@ import android.location.LocationManager
 import android.os.RemoteException
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import com.crashlytics.android.Crashlytics
-import io.antelli.plugin.BaseRestPlugin
+import io.antelli.plugin.BaseApiPlugin
 import io.antelli.plugin.base.Prefs
 import io.antelli.plugin.base.util.DateTimeCortex
 import io.antelli.plugin.seznam.pocasi.entity.Weather
@@ -21,8 +19,6 @@ import io.antelli.sdk.model.Answer
 import io.antelli.sdk.model.AnswerItem
 import io.antelli.sdk.model.Command
 import io.antelli.sdk.model.Question
-import io.reactivex.functions.Consumer
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -31,8 +27,9 @@ import kotlin.math.roundToInt
  * Handcrafted by Štěpán Šonský on 11.11.2017.
  */
 
-class SeznamPocasiPlugin : BaseRestPlugin<SeznamPocasiRestApi>() {
+class SeznamPocasiPlugin : BaseApiPlugin<SeznamPocasiRestApi>() {
 
+    override val settingsActivity = SeznamPocasiSettingsActivity::class
 
     override fun initApi(): SeznamPocasiRestApi {
         return SeznamPocasiRestApi()
@@ -63,7 +60,9 @@ class SeznamPocasiPlugin : BaseRestPlugin<SeznamPocasiRestApi>() {
                         }
                     }
 
-                }.subscribe ({ callback.answer(it) }, {
+                }.subscribe({
+                    callback.answer(it)
+                }, {
                     callback.answer(Answer("Vypadá to, že počasí momentálně nefunguje, na opravě se usilovně pracuje."))
                 })
     }
@@ -168,10 +167,6 @@ class SeznamPocasiPlugin : BaseRestPlugin<SeznamPocasiRestApi>() {
 
     override fun command(command: Command, callback: IAnswerCallback) {
 
-    }
-
-    override fun getSettingsActivity(): Class<out Activity>? {
-        return SeznamPocasiSettingsActivity::class.java
     }
 
     override fun reset() {

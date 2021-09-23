@@ -42,20 +42,21 @@ class SportPlugin : BaseWebPlugin<SportApi>() {
     private fun convert(items: ArrayList<SportResult>): Answer {
         val result = Answer()
         for (item in items) {
-            val answerItem = AnswerItem().setType(AnswerItem.TYPE_CARD)
-                    .setImage(item.homeTeamLogo)
-                    .setImageScaleType(ImageView.ScaleType.FIT_CENTER)
-                    .setSecondaryImage(item.awayTeamLogo)
-                    .setTitle(item.homeTeam + " - " + item.awayTeam)
-                    .setText(item.date)
-                    .setLargeText(item.score)
-                    .setSubtitle(item.league)
-                    .setSpeech(if (!item.upcoming) {
-                        item.homeTeam + " " + item.awayTeam + " " + item.score
-                    } else {
-                        item.homeTeam + " " + item.awayTeam + " hraje " + item.date
-                    })
-
+            val answerItem = AnswerItem().apply {
+                type = AnswerItem.TYPE_CARD
+                image = item.homeTeamLogo
+                imageScaleType = ImageView.ScaleType.FIT_CENTER
+                secondaryImage = item.awayTeamLogo
+                title = item.homeTeam + " - " + item.awayTeam
+                text = item.date
+                largeText = item.score
+                subtitle = item.league
+                speech = if (!item.upcoming) {
+                    item.homeTeam + " " + item.awayTeam + " " + item.score
+                } else {
+                    item.homeTeam + " " + item.awayTeam + " hraje " + item.date
+                }
+            }
             result.addItem(answerItem)
 
         }

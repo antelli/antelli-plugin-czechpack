@@ -40,7 +40,9 @@ class CeskaTelevizePlugin : AntelliPlugin() {
             text = "Spouštím živé vysílání ČT Art."
         }
 
-        callback.answer(Answer().setAutoRun(Intent(Intent.ACTION_VIEW, Uri.parse(url))).addItem(AnswerItem().setText(text).setSpeech(text)))
+        callback.answer(Answer(text).apply {
+            autoRun = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        })
     }
 
     override fun command(command: Command, callback: IAnswerCallback) {

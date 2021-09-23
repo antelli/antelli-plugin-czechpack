@@ -84,14 +84,14 @@ abstract class BaseDialogFragment<B : ViewDataBinding, VM : BaseDialogVM> : Mvvm
 
     protected fun dispatchResult(result: Int) {
         if (targetFragment != null) {
-            targetFragment?.onActivityResult(arguments!!.getInt(ARG_REQUEST_CODE), result, null)
+            targetFragment?.onActivityResult(requireArguments().getInt(ARG_REQUEST_CODE), result, null)
         } else {
-            (activity as MvvmActivity<*, *>).onActivityResult(arguments!!.getInt(ARG_REQUEST_CODE), result, null)
+            (activity as MvvmActivity<*, *>).onActivityResult(requireArguments().getInt(ARG_REQUEST_CODE), result, null)
         }
         dismiss()
     }
 
-    override fun onCancel(dialog: DialogInterface?) {
+    override fun onCancel(dialog: DialogInterface) {
         dispatchResult(CANCELED)
     }
 
@@ -110,11 +110,15 @@ abstract class BaseDialogFragment<B : ViewDataBinding, VM : BaseDialogVM> : Mvvm
         fun show(targetFragment: Fragment?, requestCode: Int) {
             val fragment = buildDialog(requestCode)
             fragment.setTargetFragment(targetFragment, requestCode)
-            fragment.show(targetFragment?.fragmentManager, "dialog_$requestCode")
+            targetFragment?.requireFragmentManager()?.let {
+                fragment.show(it, "dialog_$requestCode")
+            }
         }
 
         fun show(activity: AppCompatActivity?, requestCode: Int) {
-            buildDialog(requestCode).show(activity?.supportFragmentManager, "dialog_$requestCode")
+            activity?.supportFragmentManager?.let {
+                buildDialog(requestCode).show(it, "dialog_$requestCode")
+            }
         }
 
         protected open fun createArgs(requestCode: Int): Bundle {

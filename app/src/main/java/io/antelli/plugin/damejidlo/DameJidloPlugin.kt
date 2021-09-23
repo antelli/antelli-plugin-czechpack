@@ -34,16 +34,19 @@ class DameJidloPlugin : BaseWebPlugin<DameJidloApi>() {
 
     override fun answer(question: Question, callback: IAnswerCallback) {
         if (question.containsOne("jídlo", "hlad", "něco")) {
-            val result = Answer().addItem(AnswerItem()
-                    .setText("Co by sis dal?")
-                    .setSpeech("Co by sis dal?")
-                    .addHint(Hint("Pizza"))
-                    .addHint(Hint("Sushi"))
-                    .addHint(Hint("Burger"))
-                    .addHint(Hint("Kebab"))
-                    .addHint(Hint("Řízek"))
-                    .addHint(Hint("Těstoviny"))
-                    .addHint(Hint("Salát")))
+            val result = Answer().apply {
+                addItem(AnswerItem().apply {
+                    text = "Co by sis dal?"
+                    speech = "Co by sis dal?"
+                    addHint(Hint("Pizza"))
+                    addHint(Hint("Sushi"))
+                    addHint(Hint("Burger"))
+                    addHint(Hint("Kebab"))
+                    addHint(Hint("Řízek"))
+                    addHint(Hint("Těstoviny"))
+                    addHint(Hint("Salát"))
+                })
+            }
             state = STAE_PICK_FOOD
             callback.answer(result)
         } else {
@@ -51,8 +54,13 @@ class DameJidloPlugin : BaseWebPlugin<DameJidloApi>() {
             /*api.search(query)
                     .map { convert(it) }
                     .subscribe({callback.answer(it)},{callback.answer(ErrorAnswer())})*/
-            callback.answer(Answer().setAutoRun(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.damejidlo.cz/search?q=$query")))
-                    .addItem(AnswerItem().setText("Hledám $query přes Dáme Jídlo").setSpeech("Hledám $query přes Dáme Jídlo")))
+            callback.answer(Answer().apply {
+                autoRun = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.damejidlo.cz/search?q=$query"))
+                addItem(AnswerItem().apply {
+                    text = "Hledám $query přes Dáme Jídlo"
+                    speech = "Hledám $query přes Dáme Jídlo"
+                })
+            })
             reset()
         }
     }
@@ -67,7 +75,9 @@ class DameJidloPlugin : BaseWebPlugin<DameJidloApi>() {
 
     fun convert(searchResult: SearchResult): Answer {
         val result = Answer()
-        val restaurantsItem = AnswerItem().setType(AnswerItem.TYPE_CAROUSEL_MEDIUM)
+        val restaurantsItem = AnswerItem().apply {
+            type = AnswerItem.TYPE_CAROUSEL_MEDIUM
+        }
 
         for (r in searchResult.restaurants) {
             restaurantsItem.addItem(convert(r))
@@ -78,11 +88,11 @@ class DameJidloPlugin : BaseWebPlugin<DameJidloApi>() {
     }
 
     fun convert(restaurant: Restaurant): AnswerItem {
-        return AnswerItem().setTitle(restaurant.name)
-                .setImage("https://www.damejidlo.cz" + restaurant.image)
-                .setSubtitle(restaurant.rating)
-                .setText(restaurant.deliveryPrice)
+        return AnswerItem().apply {
+            title = restaurant.name
+            image = "https://www.damejidlo.cz" + restaurant.image
+            subtitle = restaurant.rating
+            text = restaurant.deliveryPrice
+        }
     }
-
-
 }

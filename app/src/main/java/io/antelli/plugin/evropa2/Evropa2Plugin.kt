@@ -17,11 +17,14 @@ class Evropa2Plugin : AntelliPlugin() {
 
     override fun answer(question: Question, callback: IAnswerCallback) {
 
-        callback.answer(Answer().addItem(AnswerItem()
-                .setType(AnswerItem.TYPE_AUDIO)
-                .setTitle("Evropa 2")
-                .setSpeech("Zapínám Evropu 2")
-                .setStream("http://ice.actve.net/fm-evropa2-128")))
+        callback.answer(Answer().apply {
+            addItem(AnswerItem().apply {
+                type = AnswerItem.TYPE_AUDIO
+                title = "Evropa 2"
+                speech = "Zapínám Evropu 2"
+                stream = "http://ice.actve.net/fm-evropa2-128"
+            })
+        })
     }
 
     override fun command(command: Command, callback: IAnswerCallback) {

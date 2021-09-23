@@ -22,11 +22,11 @@ class PerlaGroupPlugin : BaseWebPlugin<PerlaGroupApi>() {
 
     override fun answer(question: Question, callback: IAnswerCallback) {
         api.getStories().subscribe(
-            { callback.answer(convert(it)) },
-            {
-                it.printStackTrace()
-                callback.answer(Answer("Něco se pokazilo, zkus to později a případně kontaktuj vývojáře"))
-            }
+                { callback.answer(convert(it)) },
+                {
+                    it.printStackTrace()
+                    callback.answer(Answer("Něco se pokazilo, zkus to později a případně kontaktuj vývojáře"))
+                }
         )
     }
 
@@ -38,20 +38,16 @@ class PerlaGroupPlugin : BaseWebPlugin<PerlaGroupApi>() {
 
     }
 
-    override fun getSettingsActivity(): Class<out Activity>? {
-        return null
-    }
-
     private fun convert(list: List<Story>): Answer {
         val result = Answer()
         for (story in list) {
 
             result.addItem(
-                AnswerItem().setType(AnswerItem.TYPE_AUDIO)
-                    .setTitle(story.name)
-                    .setSpeech(story.name)
-                    .setStream(story.url)
-            )
+                    AnswerItem().apply {
+                        type = AnswerItem.TYPE_AUDIO
+                        speech = story.name
+                        stream = story.url
+                    })
         }
         return result
     }

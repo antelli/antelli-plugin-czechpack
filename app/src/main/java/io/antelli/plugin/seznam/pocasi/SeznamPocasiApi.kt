@@ -70,7 +70,7 @@ class SeznamPocasiApi(private val context: Context) : BaseWebApi() {
                 .map { cmd ->
                     val answer = Answer()
 
-                    answer.addItem(getMainItem(cmd.getString(PARAM_SOURCE), cmd.getInt(PARAM_DELTA)))
+                    answer.addItem(getMainItem(cmd.getString(PARAM_SOURCE), cmd.getInt(PARAM_DELTA) ?: 0))
                     answer
                 }
     }
@@ -105,20 +105,20 @@ class SeznamPocasiApi(private val context: Context) : BaseWebApi() {
 
         var m = Pattern.compile("<h1 id=\"title\".*?>(.*?)</h1>", Pattern.DOTALL).matcher(source)
         if (m.find()) {
-            item.setTitle(removeHtmlTags(m.group(1)))
+            item.title = removeHtmlTags(m.group(1))
         }
 
         if (daysDelta == 0) {
             m = Pattern.compile("<div class=\"wrapper\">.*?<span class=\"dayName\">(.*?)</span>.*?<span class=\"date\">(.*?)</span>.*?<div class=\"info\">.*?<p>(.*?)</p>.*?<span class=\"value\">(.*?)</span>.*?class=\"weather weather(.*?) .*?\"", Pattern.DOTALL).matcher(source)
             while (m.find()) {
-                item.setSubtitle(m.group(1) + " " + m.group(2))
-                item.setLargeText(m.group(4) + "°C")
-                item.setText(removeHtmlTags(m.group(3)))
-                item.setSpeech(item.text)
-                item.setType(AnswerItem.TYPE_CARD)
+                item.subtitle = m.group(1) + " " + m.group(2)
+                item.largeText = m.group(4) + "°C"
+                item.text = removeHtmlTags(m.group(3))
+                item.speech = item.text
+                item.type = AnswerItem.TYPE_CARD
 
-                item.setImage(getImageLink(m.group(5)))
-                item.setImageScaleType(ImageView.ScaleType.FIT_CENTER)
+                item.image = getImageLink(m.group(5))
+                item.imageScaleType = ImageView.ScaleType.FIT_CENTER
                 return item
             }
         } else {
@@ -127,13 +127,13 @@ class SeznamPocasiApi(private val context: Context) : BaseWebApi() {
             while (m.find()) {
 
                 if (i == daysDelta) {
-                    item.setSubtitle(m.group(1) + " " + m.group(2))
-                    item.setLargeText(m.group(3) + "°C / " + m.group(4) + "°C")
-                    item.setText(removeHtmlTags(m.group(5)))
-                    item.setSpeech(item.text)
-                    item.setType(AnswerItem.TYPE_CARD)
-                    item.setImage(getImageLink(m.group(6)))
-                    item.setImageScaleType(ImageView.ScaleType.FIT_CENTER)
+                    item.subtitle = m.group(1) + " " + m.group(2)
+                    item.largeText = m.group(3) + "°C / " + m.group(4) + "°C"
+                    item.text = removeHtmlTags(m.group(5))
+                    item.speech = item.text
+                    item.type = AnswerItem.TYPE_CARD
+                    item.image = getImageLink(m.group(6))
+                    item.imageScaleType = ImageView.ScaleType.FIT_CENTER
                     return item
                 }
                 i++
@@ -146,20 +146,26 @@ class SeznamPocasiApi(private val context: Context) : BaseWebApi() {
         val result = ArrayList<AnswerItem>()
         val m = Pattern.compile("<div class=\"wrapper\">.*?<span class=\"dayName\">(.*?)</span>.*?<span class=\"date\">(.*?)</span>.*?<span class=\"value\">(.*?)</span>.*?<span class=\"value\">(.*?)</span>.*?<div class=\"info\">.*?<p>(.*?)</p>.*?class=\"weather weather(.*?)\"", Pattern.DOTALL).matcher(source.substring(source.indexOf("predpoved-zitra")))
 
-        val item = AnswerItem().setType(AnswerItem.TYPE_CAROUSEL_SMALL)
+        val item = AnswerItem().apply {
+            type = AnswerItem.TYPE_CAROUSEL_SMALL
+        }
         //var galleryItem: AnswerItem
         val gallery = ArrayList<AnswerItem>()
         var i = 1
         while (m.find()) {
-            gallery.add(AnswerItem()
-                    .setTitle(m.group(1) + " " + m.group(2))
-                    .setSubtitle(m.group(3) + "°C / " + m.group(4) + "°C")
-                    .setImage(getImageLink(m.group(6)))
-                    .setImageScaleType(ImageView.ScaleType.FIT_CENTER)
-                    .setCommand(Command(ACTION_FORECAST).putInt(PARAM_DELTA, i).putString(PARAM_SOURCE, source)))
+            gallery.add(AnswerItem().apply {
+                title = m.group(1) + " " + m.group(2)
+                subtitle = m.group(3) + "°C / " + m.group(4) + "°C"
+                image = getImageLink(m.group(6))
+                imageScaleType = ImageView.ScaleType.FIT_CENTER
+                command = Command(ACTION_FORECAST).apply {
+                    putInt(PARAM_DELTA, i)
+                    putString(PARAM_SOURCE, source)
+                }
+            })
             i++
         }
-        item.setItems(gallery)
+        item.items = gallery
         result.add(item)
 
         return result

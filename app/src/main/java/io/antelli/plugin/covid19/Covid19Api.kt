@@ -10,7 +10,10 @@ class Covid19Api : BaseWebApi() {
         return getHtmlFrom("https://onemocneni-aktualne.mzcr.cz/covid-19")
                 .map {
                     val parsed = parse(it, "count-test.*?>(.*?)<.*?count-sick.*?>(.*?)<.*?count-recover.*?>(.*?)<.*?count-dead.*?>(.*?)<")
-                    return@map Covid19Entity(parsed.first(0).replace(" ", ""), parsed.first(1).replace(" ", ""), parsed.first(2).replace(" ", ""), parsed.first(3).replace(" ", ""))
+                    return@map Covid19Entity(parsed.first(0).replace("&nbsp;", "").replace(" ", "").toInt(),
+                            parsed.first(1).replace("&nbsp;", "").replace(" ", "").toInt(),
+                            parsed.first(2).replace("&nbsp;", "").replace(" ", "").toInt(),
+                            parsed.first(3).replace("&nbsp;", "").replace(" ", "").toInt())
                 }
     }
 }

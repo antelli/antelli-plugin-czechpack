@@ -5,12 +5,13 @@ import io.antelli.plugin.seznam.pocasi.entity.WeatherDescription
 import io.antelli.plugin.seznam.pocasi.entity.Weather
 import io.reactivex.Observable
 import java.util.*
+import kotlin.reflect.KClass
 
 class SeznamPocasiRestApi : BaseRestApi<SeznamPocasiApiDef>() {
     override val baseUrl
         get() = "https://wapi.pocasi.seznam.cz/"
-    override val apiDefClass
-        get() = SeznamPocasiApiDef::class.java
+    override val apiDefClass : KClass<SeznamPocasiApiDef>
+            get() = SeznamPocasiApiDef::class
 
     fun getCurrent(lat : Double?, lon : Double?): Observable<Weather> {
         val latitude = lat ?: 50.09

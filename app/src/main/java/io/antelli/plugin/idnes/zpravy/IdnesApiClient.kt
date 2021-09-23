@@ -22,21 +22,21 @@ import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function
 import java.lang.Exception
+import kotlin.reflect.KClass
 
 /**
  * Handcrafted by Štěpán Šonský on 10.11.2017.
  */
 
 class IdnesApiClient : BaseRestApi<IdnesApiDef>() {
-    override val apiDefClass: Class<IdnesApiDef>
-        get() = IdnesApiDef::class.java
+    override val apiDefClass : KClass<IdnesApiDef>
+        get() = IdnesApiDef::class
 
     private val articleCache = HashMap<String?, Article>()
     private val sectionMgr = SectionManager()
 
     override val baseUrl: String
         get() = "https://servis.idnes.cz/ExportApi/"
-
 
 
     private fun getSphArticleList(): Observable<ArticleList> {
@@ -50,11 +50,12 @@ class IdnesApiClient : BaseRestApi<IdnesApiDef>() {
 
     internal fun getSections(id: String?): Observable<List<Section>> {
         return api.section(id ?: "idnes").map {
-            it.result.section.sections }
+            it.result.section.sections
+        }
     }
 
     fun getArticles(sectionId: String?): Observable<Answer> {
-        return Observable.zip(getArticleList(sectionId), getSections(sectionId), BiFunction{ articleList, sections ->
+        return Observable.zip(getArticleList(sectionId), getSections(sectionId), BiFunction { articleList, sections ->
             val answer = Answer()
             for (article in articleList.getArticles()) {
                 var img: String? = null
@@ -64,21 +65,23 @@ class IdnesApiClient : BaseRestApi<IdnesApiDef>() {
                     img = article.getPhoto().getTypes().get(0).getUrl()
                 }
                 if (article.getTitle() != null) {
-                    answer.addItem(AnswerItem()
-                            .setTitle(article.getTitle())
-                            .setImage(img)
-                            .setType(AnswerItem.TYPE_CARD)
-                            .setCommand(Command(IdnesNewsPlugin.ACTION_ARTICLE)
-                                    .putString(IdnesNewsPlugin.PARAM_ID, article.getIdArticle()))
-                            .setSpeech(article.getTitle()))
+                    answer.addItem(AnswerItem().apply {
+                        title = article.getTitle()
+                        image = img
+                        type = AnswerItem.TYPE_CARD
+                        command = Command(IdnesNewsPlugin.ACTION_ARTICLE).apply {
+                            putString(IdnesNewsPlugin.PARAM_ID, article.getIdArticle())
+                        }
+                        speech = article.getTitle()
+                    })
                 }
             }
 
-            if (sections != null) {
-                val lastItem = answer.items[answer.items.size - 1]
-                for (sect in sections!!) {
-                    lastItem.addHint(Hint(sect.getNamePublic(), Command(IdnesNewsPlugin.ACTION_SECTION).putString(IdnesNewsPlugin.PARAM_ID, sect.getIdSection())))
-                }
+            val lastItem = answer.items[answer.items.size - 1]
+            for (sect in sections) {
+                lastItem.addHint(Hint(sect.namePublic, Command(IdnesNewsPlugin.ACTION_SECTION).apply {
+                    putString(IdnesNewsPlugin.PARAM_ID, sect.idSection)
+                }))
             }
 
             answer
@@ -116,29 +119,32 @@ class IdnesApiClient : BaseRestApi<IdnesApiDef>() {
                     val title = photo.textShort
                     val source1 = photo.source.name
 
-                    gallery.add(AnswerItem()
-                            .setTitle(title)
-                            .setSubtitle(source1)
-                            .setImage(photo.types[0].url))
+                    gallery.add(AnswerItem().apply {
+                        this.title = title
+                        this.subtitle = source1
+                        image = photo.types[0].url
+                    })
                 }
 
-                answer.addItem(AnswerItem()
-                        .setTitle(article.title)
-                        .setType(AnswerItem.TYPE_CONVERSATION)
-                        .setItems(gallery))
+                answer.addItem(AnswerItem().apply {
+                    title = article.title
+                    type = AnswerItem.TYPE_CONVERSATION
+                    items = gallery
+                })
 
-                answer.addItem(AnswerItem()
-                        .setText(text)
-                        .setType(AnswerItem.TYPE_CARD)
-                        .setSpeech(text))
+                answer.addItem(AnswerItem().apply {
+                    this.text = text
+                    type = AnswerItem.TYPE_CARD
+                    speech = text
+                })
             } else {
-                answer.addItem(AnswerItem()
-                        .setTitle(article.title)
-                        .setText(text)
-                        .setType(AnswerItem.TYPE_CARD)
-                        .setSpeech(text))
+                answer.addItem(AnswerItem().apply {
+                    title = article.title
+                    this.text = text
+                    type = AnswerItem.TYPE_CARD
+                    speech = text
+                })
             }
-
 
             answer
         }

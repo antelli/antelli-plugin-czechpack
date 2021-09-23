@@ -1,1 +1,2 @@
 include ':app', ':antelli-sdk', ':framework'
+project(':antelli-sdk').projectDir = new File(settingsDir, '../antelli-sdk/sdk')

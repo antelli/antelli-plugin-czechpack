@@ -18,8 +18,13 @@ class AlzaPlugin : AntelliPlugin() {
 
     override fun answer(question: Question, callback: IAnswerCallback) {
         val query = question.removeWords("na alze", "na alza", "alza", "hledat", "hledej", "najdi", "najít", "za kolik je", "za kolik jsou", "kolik stojí", "kolik stojej")
-        callback.answer(Answer().setAutoRun(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.alza.cz/search.htm?IDP=10091&exps="+query)))
-                .addItem(AnswerItem().setText("Hledám $query na Alze").setSpeech("Hledám $query na Alze")))
+        callback.answer(Answer().apply {
+            autoRun = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.alza.cz/search.htm?IDP=10091&exps=$query"))
+            addItem(AnswerItem().apply {
+                text = "Hledám $query na Alze"
+                speech = "Hledám $query na Alze"
+            })
+        })
     }
 
     override fun reset() {

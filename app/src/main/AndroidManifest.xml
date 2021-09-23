@@ -23,8 +23,9 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="io.antelli.plugin.idnes.tv.IdnesTvSettingsActivity"
-            android:label="@string/settings_tv_title"></activity>
+        <activity
+            android:name="io.antelli.plugin.idnes.tv.IdnesTvSettingsActivity"
+            android:label="@string/settings_tv_title" />
         <activity
             android:name="io.antelli.plugin.recepty.ReceptySettingsActivity"
             android:label="@string/settings_recepty_title" />
